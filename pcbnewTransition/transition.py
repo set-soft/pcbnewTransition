@@ -1,9 +1,19 @@
+# We need to ensure that:
+# - `import pcbnew` provides the original pcbnew module
+# - `from pcbnewTransition` import pcbnew import the patched module. Therefore,
+# we cannot patch the original module. Instead, we have to trick python to load
+# a module twice. Therefore, let's delete pcbnew from sys.modules, import it, patch it and delete from sys.modules
+import sys
 
-import pcbnew
+originalPcbnew = None
+try:
+    originalPcbnew = sys.modules["pcbnew"]
+    del sys.modules["pcbnew"]
+except KeyError:
+    pass
+
+from . import pcbnew
 import types
-
-# KiCAD 6 renames some of the types, ensure compatibility by introducing aliases
-# when KiCAD 5 is used
 
 def getVersion():
     try:
@@ -42,13 +52,15 @@ def patchRotate(item):
             newRotate = lambda self, center, angle: originalRotate(self, center, angle.AsTenthsOfADegree())
             setattr(newRotate, "patched", True)
             item.Rotate = newRotate
-    if hasattr(item, "SetOrientation"):
+    # We have to ignore PCB_DIMs objects as the orientation has different meaning
+    if hasattr(item, "SetOrientation") and not hasattr(item, "GetUnitsMode"):
         originalSetOrientation = item.SetOrientation
         if not getattr(originalSetOrientation, "patched", False):
             newSetOrientation = lambda self, angle: originalSetOrientation(self, angle.AsTenthsOfADegree())
             setattr(newSetOrientation, "patched", True)
             item.SetOrientation = newSetOrientation
-    if hasattr(item, "GetOrientation"):
+    # We have to ignore PCB_DIMs objects as the orientation has different meaning
+    if hasattr(item, "GetOrientation") and not hasattr(item, "GetUnitsMode"):
         originalGetOrientation = item.GetOrientation
         if not getattr(originalGetOrientation, "patched", False):
             newGetOrientation = lambda self: pcbnew.EDA_ANGLE(originalGetOrientation(self), pcbnew.TENTHS_OF_A_DEGREE_T)
@@ -66,6 +78,17 @@ def patchRotate(item):
             newSetTextAngle = lambda self, angle: originalSetTextAngle(self, angle.AsTenthsOfADegree())
             setattr(newSetTextAngle, "patched", True)
             item.SetTextAngle = newSetTextAngle
+    if hasattr(item, "SetHatchOrientation"):
+        originalSetHatchOrientation = item.SetHatchOrientation
+        if not getattr(originalSetHatchOrientation, "patched", False):
+            newSetHatchOrientation = lambda self, angle: originalSetHatchOrientation(self, angle.AsTenthsOfADegree())
+            setattr(newSetHatchOrientation, "patched", True)
+            item.SetHatchOrientation = newSetHatchOrientation
+
+def pathGetItemDescription(item):
+    if hasattr(item, "GetSelectMenuText") and not hasattr(item, "GetItemDescription"):
+        setattr(item, "GetItemDescription", getattr(item, "GetSelectMenuText"))
+
 
 KICAD_VERSION = getVersion()
 
@@ -79,7 +102,7 @@ def isV7(version=KICAD_VERSION):
         return True
     return version[0] == 7
 
-if not isV6(KICAD_VERSION):
+if not isV6(KICAD_VERSION) and not isV7(KICAD_VERSION):
     # Introduce new functions
     pcbnew.NewBoard = NewBoard
 
@@ -177,6 +200,10 @@ if not isV7(KICAD_VERSION):
         setattr(newCalcArcAngles, "patched", True)
         pcbnew.EDA_SHAPE.CalcArcAngles = newCalcArcAngles
 
+    # GetSelectMenuText
+    for x in dir(pcbnew):
+        pathGetItemDescription(getattr(pcbnew, x))
+
     # EDA_TEXT
     originalTextSize = pcbnew.EDA_TEXT.SetTextSize
     pcbnew.EDA_TEXT.SetTextSize = lambda self, size: originalTextSize(self, pcbnew.wxSize(size[0], size[1]))
@@ -187,4 +214,12 @@ if not isV7(KICAD_VERSION):
 
     originalSetSize = pcbnew.PAD.SetSize
     pcbnew.PAD.SetSize = lambda self, size: originalSetSize(self, pcbnew.wxSize(size[0], size[1]))
+
+# We need to ensure that the original pcbnew is not modified
+try:
+    del sys.modules["pcbnew"]
+    if originalPcbnew is not None:
+        sys.modules["pcbnew"] = originalPcbnew
+except KeyError:
+    pass
 
