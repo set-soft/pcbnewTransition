@@ -1,8 +1,14 @@
+python3-pcbnewtransition (0.3.4-2) stable; urgency=medium
+
+  * Add EDA_ANGLE patch for EDA_SHAPE::SetArcAngleAndEnd
+
+ -- Salvador E. Tropea <salvador@inti.gob.ar>  Wed, 01 Mar 2023 13:53:45 -0300
+
 python3-pcbnewtransition (0.3.4-1) stable; urgency=medium
 
   * New upstream release
 
- -- Salvador Eduardo Tropea <salvador@inti.gob.ar>  Wed, 01 Mar 2023 09:30:34 -0300
+ -- Salvador E. Tropea <salvador@inti.gob.ar>  Wed, 01 Mar 2023 09:30:34 -0300
 
 python3-pcbnewtransition (0.2.0-1) stable; urgency=low
 
