@@ -14,6 +14,7 @@ except KeyError:
 
 from . import pcbnew
 import types
+import _pcbnew
 
 def getVersion():
     try:
@@ -94,6 +95,14 @@ def patchRotate(item):
 def pathGetItemDescription(item):
     if hasattr(item, "GetSelectMenuText") and not hasattr(item, "GetItemDescription"):
         setattr(item, "GetItemDescription", getattr(item, "GetSelectMenuText"))
+
+
+def DuplicateWithCast(self):
+    ct = self.GetClass()
+    if ct=="BOARD":
+        return None
+    else:
+        return pcbnew.Cast_to_BOARD_ITEM(_pcbnew.BOARD_ITEM_Duplicate(self)).Cast()
 
 
 KICAD_VERSION = getVersion()
@@ -230,6 +239,11 @@ if not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION):
 if isV8(KICAD_VERSION):
    pcbnew.FP_TEXT = pcbnew.PCB_TEXT
    pcbnew.FP_SHAPE = pcbnew.PCB_SHAPE
+
+
+if isV7(KICAD_VERSION):
+   # KiCad 7.0.2 bug
+   pcbnew.BOARD_ITEM.Duplicate = DuplicateWithCast
 
 
 # We need to ensure that the original pcbnew is not modified
