@@ -102,7 +102,7 @@ def DuplicateWithCast(self):
     if ct=="BOARD":
         return None
     else:
-        return pcbnew.Cast_to_BOARD_ITEM(_pcbnew.BOARD_ITEM_Duplicate(self)).Cast()
+        return _pcbnew.BOARD_ITEM_Duplicate(self).Cast()
 
 
 KICAD_VERSION = getVersion()
