@@ -1,3 +1,9 @@
+python3-pcbnewtransition (0.3.4-5) stable; urgency=medium
+
+  * Add KiCad 7.99 GetShownText workaround
+
+ -- Salvador E. Tropea <salvador@inti.gob.ar>  Tue, 23 May 2023 12:35:06 -0300
+
 python3-pcbnewtransition (0.3.4-4) stable; urgency=medium
 
   * Add KiCad 7.0.2 Duplicate bug workaround
