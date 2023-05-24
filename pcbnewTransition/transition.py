@@ -240,7 +240,7 @@ if isV8(KICAD_VERSION):
    pcbnew.FP_TEXT = pcbnew.PCB_TEXT
    pcbnew.FP_SHAPE = pcbnew.PCB_SHAPE
    originalGetShownText = pcbnew.PCB_TEXT.GetShownText
-   pcbnew.PCB_TEXT.GetShownText = lambda aDepth=0, aAllowExtraText=True: originalGetShownText(aAllowExtraText, aDepth)
+   pcbnew.PCB_TEXT.GetShownText = lambda self, aDepth=0, aAllowExtraText=True: originalGetShownText(self, aAllowExtraText, aDepth)
 
 
 if isV7(KICAD_VERSION):
