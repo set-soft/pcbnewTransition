@@ -239,14 +239,15 @@ if not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION):
 if isV8(KICAD_VERSION):
    pcbnew.FP_TEXT = pcbnew.PCB_TEXT
    pcbnew.FP_SHAPE = pcbnew.PCB_SHAPE
-   originalGetShownText = pcbnew.PCB_TEXT.GetShownText
-   pcbnew.PCB_TEXT.GetShownText = lambda self, aDepth=0, aAllowExtraText=True: originalGetShownText(self, aAllowExtraText, aDepth)
 
 
 if isV7(KICAD_VERSION):
    # KiCad 7.0.2 bug
    pcbnew.BOARD_ITEM.Duplicate = DuplicateWithCast
 
+# There are some incompatibilites that cannot be monkeypatched in a right way;
+# let's export them as new types:
+pcbnew.FIELD_TYPE = pcbnew.PCB_FIELD if isV8() else pcbnew.FP_TEXT
 
 # We need to ensure that the original pcbnew is not modified
 try:
