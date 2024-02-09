@@ -18,7 +18,12 @@ clean:
 	rm -rf dist build
 
 deb:
+	@-[ ! -f versioneer.py.ok ] && mv versioneer.py versioneer.py.ok
+	@-[ ! -f pcbnewTransition/_version.py.ok ] && mv pcbnewTransition/_version.py pcbnewTransition/_version.py.ok
+	cp debian/versioneer.py .
 	DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -uc -b
+	mv versioneer.py.ok versioneer.py
+	mv pcbnewTransition/_version.py.ok pcbnewTransition/_version.py
 
 deb_clean:
 	fakeroot debian/rules clean

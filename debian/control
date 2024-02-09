@@ -11,5 +11,6 @@ Package: python3-pcbnewtransition
 Architecture: all
 Multi-Arch: foreign
 Depends: ${misc:Depends}, ${python3:Depends}
-Description: KiCad 5/6 pcbnew API compatibility layer
- A very simple layer to prvide KiCad 5 compatibility using the KiCad 6 API.
+Description: KiCad 5/6/7/8 pcbnew API compatibility layer
+ A very simple layer to provide KiCad 5/6/7 compatibility using the
+ KiCad 8 API.

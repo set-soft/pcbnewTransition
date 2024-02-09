@@ -13,7 +13,7 @@ setuptools.setup(
     cmdclass=versioneer.get_cmdclass(),
     author="Jan Mrázek",
     author_email="email@honzamrazek.cz",
-    description="Library that allows you to support both, KiCAD 5 and KiCAD 6 in your plugins",
+    description="Library that allows you to support, KiCAD 5 to 8 in your plugins",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/yaqwsx/pcbnewTransition",

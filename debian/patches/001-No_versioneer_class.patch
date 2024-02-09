@@ -1,0 +1,10 @@
+--- a/setup.py
++++ b/setup.py
+@@ -10,7 +10,6 @@
+     name="pcbnewTransition",
+     python_requires='>3.7',
+     version=versioneer.get_version(),
+-    cmdclass=versioneer.get_cmdclass(),
+     author="Jan Mrázek",
+     author_email="email@honzamrazek.cz",
+     description="Library that allows you to support, KiCAD 5 to 8 in your plugins",
