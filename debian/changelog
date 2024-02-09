@@ -1,3 +1,10 @@
+python3-pcbnewtransition (0.4.0-1) stable; urgency=medium
+
+  * KiCad v8 support from upstream
+  * Removed GetShownText patch, now fixed in KiCad
+
+ -- Salvador Eduardo Tropea <salvador@inti.gob.ar>  Thu, 08 Feb 2024 14:06:41 -0300
+
 python3-pcbnewtransition (0.3.4-6) stable; urgency=medium
 
   * Fixed missing self argument for GetShownText
