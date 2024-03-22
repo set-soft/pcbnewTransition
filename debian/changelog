@@ -1,3 +1,9 @@
+python3-pcbnewtransition (0.4.0-2) stable; urgency=medium
+
+  * Patched GetTextAngle (needed by panelize on KiCad 6)
+
+ -- Salvador Eduardo Tropea <salvador@inti.gob.ar>  Fri, 22 Mar 2024 07:03:41 -0300
+
 python3-pcbnewtransition (0.4.0-1) stable; urgency=medium
 
   * KiCad v8 support from upstream
