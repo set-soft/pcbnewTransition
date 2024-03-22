@@ -1,3 +1,9 @@
+python3-pcbnewtransition (0.4.1-1) stable; urgency=medium
+
+  * Make a copy of the pcbnew module only for v6
+
+ -- Salvador Eduardo Tropea <salvador@inti.gob.ar>  Fri, 22 Mar 2024 07:16:02 -0300
+
 python3-pcbnewtransition (0.4.0-2) stable; urgency=medium
 
   * Patched GetTextAngle (needed by panelize on KiCad 6)
