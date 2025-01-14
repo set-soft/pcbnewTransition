@@ -33,6 +33,11 @@ def isV8(version=KICAD_VERSION):
         return True
     return version[0] == 8
 
+def isV9(version=KICAD_VERSION):
+    if version[0] == 8 and version[1] == 99:
+        return True
+    return version[0] == 9
+
 if isV6(KICAD_VERSION):
     # There are big breaking changes between 6 -> 7.
     # We need to ensure that:
@@ -134,7 +139,7 @@ def DuplicateWithCast(self):
         return _pcbnew.BOARD_ITEM_Duplicate(self).Cast()
 
 
-if not isV6(KICAD_VERSION) and not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION):
+if not isV6(KICAD_VERSION) and not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION) and not isV9(KICAD_VERSION):
     # Introduce new functions
     pcbnew.NewBoard = NewBoard
 
@@ -190,7 +195,7 @@ except ImportError:
     pcbnew.RADIANS_T = EDA_ANGLE_T.RADIANS_T
     pcbnew.TENTHS_OF_A_DEGREE_T = EDA_ANGLE_T.TENTHS_OF_A_DEGREE_T
 
-if not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION):
+if not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION) and not isV9(KICAD_VERSION):
     # VECTOR2I & wxPoint
     class _transition_VECTOR2I(pcbnew.wxPoint):
         def __init__(self, *args, **kwargs):
@@ -248,7 +253,7 @@ if not isV7(KICAD_VERSION) and not isV8(KICAD_VERSION):
     pcbnew.PAD.SetSize = lambda self, size: originalSetSize(self, pcbnew.wxSize(size[0], size[1]))
 
 
-if isV8(KICAD_VERSION):
+if isV8(KICAD_VERSION) or isV9(KICAD_VERSION):
    pcbnew.FP_TEXT = pcbnew.PCB_TEXT
    pcbnew.FP_SHAPE = pcbnew.PCB_SHAPE
 
