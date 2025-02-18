@@ -10,4 +10,3 @@
      zip_safe=False,
      include_package_data=True
  )
-\ No newline at end of file
