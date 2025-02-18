@@ -1,3 +1,9 @@
+python3-pcbnewtransition (0.5.0-1) stable; urgency=medium
+
+  * Upstream sync of KiCad 9 support
+
+ -- Salvador Eduardo Tropea <salvador@inti.gob.ar>  Tue, 18 Feb 2025 10:14:04 -0300
+
 python3-pcbnewtransition (0.4.2-1) stable; urgency=medium
 
   * KiCad 9 detection
