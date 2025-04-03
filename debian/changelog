@@ -1,3 +1,9 @@
+python3-pcbnewtransition (0.5.2-2) stable; urgency=medium
+
+  * Fixed KiCad 7 compatibility
+
+ -- Salvador Eduardo Tropea <salvador@inti.gob.ar>  Thu, 03 Apr 2025 10:18:32 -0300
+
 python3-pcbnewtransition (0.5.2-1) stable; urgency=medium
 
   * Upstream support for KiCad 9.0.1 (unit constants renamed)

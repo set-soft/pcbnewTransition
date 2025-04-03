@@ -273,8 +273,9 @@ pcbnew.FIELD_TYPE = pcbnew.PCB_FIELD if kicad_major() >= 8 else pcbnew.FP_TEXT
 try:
     pcbnew.EDA_UNITS_INCH = pcbnew.EDA_UNITS_INCHES
     pcbnew.EDA_UNITS_MM = pcbnew.EDA_UNITS_MILLIMETRES
-    pcbnew.EDA_UNITS_UM = pcbnew.EDA_UNITS_MICROMETRES
-    pcbnew.EDA_UNITS_CM = pcbnew.EDA_UNITS_CENTIMETRES
+    # KiCad 8, not in 7. Not used by KiKit
+    # pcbnew.EDA_UNITS_UM = pcbnew.EDA_UNITS_MICROMETRES
+    # pcbnew.EDA_UNITS_CM = pcbnew.EDA_UNITS_CENTIMETRES
 
     pcbnew.DXF_UNITS_MM = pcbnew.DXF_UNITS_MILLIMETERS
     pcbnew.DXF_UNITS_INCH = pcbnew.DXF_UNITS_INCHES
